@@ -49,6 +49,8 @@ const spinBtn = <HTMLButtonElement> document.getElementById('spin-btn');
 spinBtn.addEventListener('click', () => spinBtnHandler(2000, 100)); 
 const colourHistorySelect = <HTMLSelectElement> document.getElementById('colourSelect')
 const bodyHistorySelect = <HTMLSelectElement> document.getElementById('bodyPartSelect')
+colourHistorySelect.addEventListener('change', ()=> statsBtnHandler(colourHistorySelect.value, bodyHistorySelect.value))
+bodyHistorySelect.addEventListener('change', ()=> statsBtnHandler(colourHistorySelect.value, bodyHistorySelect.value))
 const statBtn = <HTMLButtonElement> document.getElementById('statsBtn');
 statBtn.addEventListener('click',()=> statsBtnHandler(colourHistorySelect.value, bodyHistorySelect.value))
 
