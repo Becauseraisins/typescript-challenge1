@@ -93,12 +93,18 @@ function stopSpinners() {
   spinBtn.disabled = false;
   addToHistory();
 }
-
-
+const historyTable = document.getElementById('historyTableBody');
+let spinHistoryTable = Array<string>(5)
 // add the newly spun result to the history table
 function addToHistory() {
-  const historyTable = document.getElementById('historyTableBody');
-  historyTable.innerHTML+=`<thead> <tr> <th>${spinCount}</th> <th>${selectedColour}</th> <th>${selectedBodyPart}</th></tr></thead>`
+  spinHistoryTable.push(`<thead> <tr> <th>${spinCount}</th> <th>${selectedColour}</th> <th>${selectedBodyPart}</th></tr></thead>`)
+  if(spinHistoryTable.length >5 ){
+    spinHistoryTable.shift()
+  }
+  historyTable.innerHTML=''
+  for(let spin in spinHistoryTable){
+    historyTable.innerHTML+=spinHistoryTable[spin]
+  }
   var spin = new SpinRecord(spinCount,ColoursHelper.get(selectedColour), BodyPartsHelper.get(selectedBodyPart))
   spinHistoryArray.push(spin)
 }
@@ -106,12 +112,12 @@ function addToHistory() {
 function statsBtnHandler(colour, bodyPart) {
   const statsTable= document.getElementById('statsResults')
   statsTable.innerHTML = `<div>${bodyPart}${colour} Rolled: ${getAmount(colour,bodyPart)} times, Last roll ${getLastSpun(colour,bodyPart)}`
-  // TODO set the statsResults div innerHTML to the amount and last spun number that the user has chosen
+  // set the statsResults div innerHTML to the amount and last spun number that the user has chosen
   // eg. Red LeftHand spun 10 times
   //     Red LeftHand last spun at num 23
 }
 
-// TODO returns the amount of times the combination of selected of colour and body part have been spun
+// returns the amount of times the combination of selected of colour and body part have been spun
 function getAmount(colour, BodyPart): number {
   let count = 0
   for(let s in spinHistoryArray){
@@ -124,7 +130,7 @@ function getAmount(colour, BodyPart): number {
   return count;
 }
 
-// TODO return the last num which the combination of selected of colour and body part have been spun
+// return the last num which the combination of selected of colour and body part have been spun
 function getLastSpun(colour, BodyPart): number {
 let count = 0
 for(let s in spinHistoryArray){
